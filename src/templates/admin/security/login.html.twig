@@ -1,18 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/layout/login.html.twig' %}
 
 {% block title %}Login{% endblock %}
 
 {% block body %}
-    <h4>Admin login</h4>
-    {% if error %}
-        <div class="alert alert-danger">
-            {{ error.messageKey|trans(error.messageData, 'security') }}
-        </div>
-    {% endif %}
+    <div class="login-container">
+        <div class="card">
+            <div class="card-header">
+                Admin login
+            </div>
+            <div class="card-body">
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
 
-    {{ form_start(form) }}
-    {{ form_row(form.username, {attr: {autofocus: true}}) }}
-    {{ form_row(form.password) }}
-    <button type="submit" class="btn btn-primary">Login</button>
-    {{ form_end(form) }}
+                {{ form_start(form) }}
+                {{ form_row(form.username, {attr: {autofocus: true}}) }}
+                {{ form_row(form.password) }}
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
