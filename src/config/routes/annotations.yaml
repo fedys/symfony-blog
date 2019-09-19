@@ -1,0 +1,18 @@
+front:
+  resource: ../../src/Controller/Front
+  type: annotation
+  name_prefix: front_
+
+admin:
+  resource: ../../src/Controller/Admin
+  type: annotation
+  name_prefix: admin_
+  prefix: /admin
+  trailing_slash_on_root: false
+
+api:
+  resource: ../../src/Controller/Api
+  type: annotation
+  name_prefix: api_
+  prefix: /api
+  trailing_slash_on_root: false

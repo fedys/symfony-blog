@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    ports:
+      - "3406:3306"
+  php:
+    ports:
+      - "80:80"
+#    volumes:
+#      - /tmp/.X11-unix:/tmp/.X11-unix # for sharing the host's display server
+#    environment:
+#      DISPLAY: ${DISPLAY} # for sharing the host's display server
