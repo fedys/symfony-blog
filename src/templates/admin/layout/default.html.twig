@@ -26,7 +26,8 @@
     </nav>
 
     <main class="container pt-5">
-        <div class="pt-3">
+        <div class="pt-4">
+            {% include 'admin/include/flash_messages.html.twig' %}
             {% block content %}{% endblock %}
         </div>
     </main>

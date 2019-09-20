@@ -1,0 +1,15 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+
+fos_ck_editor:
+    base_path: '/bundles/fosckeditor'
+    js_path:   '/bundles/fosckeditor/ckeditor.js'
+    configs:
+        admin_config:
+            entities_latin: false
+            toolbarCanCollapse: true
+            toolbarStartupExpanded: false
+            forcePasteAsPlainText: true
+
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

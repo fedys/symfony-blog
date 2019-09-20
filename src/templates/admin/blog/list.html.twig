@@ -3,5 +3,54 @@
 {% block title %}Admin - Blog{% endblock %}
 
 {% block content %}
-    <h1>Blog</h1>
+    <div class="card">
+        <div class="card-header">
+            Blog - list
+            <a href="{{ path('admin_blog_insert') }}" class="float-right">Create a new blog</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Tags</th>
+                        <th scope="col">Enabled</th>
+                        <th scope="col" class="text-right">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# blog \App\Entity\Blog #}
+                    {% for blog in blogs %}
+                        {% set editUrl = path('admin_blog_update', { id: blog.id}) %}
+                        <tr>
+                            <td>{{ blog.id }}</td>
+                            <td><a href="{{ editUrl }}">{{ blog.title }}</a></td>
+                            <td>{{ blog.date|date }}</td>
+                            <td>{{ blog.tags|join(', ') }}</td>
+                            <td>
+                                {% if blog.enabled %}
+                                    <span class="badge badge-success">Yes</span>
+                                {% else %}
+                                    <span class="badge badge-danger">No</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-right">
+                                {% if blog.enabled %}
+                                    <a href="#">View</a>
+                                {% endif %}
+                                <a href="{{ editUrl }}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="mb-n3">
+                {{ pagerfanta(blogs) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
