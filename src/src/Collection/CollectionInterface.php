@@ -2,11 +2,11 @@
 
 namespace App\Collection;
 
+use App\Collection\Exception\NonUniqueException;
+use App\Collection\Exception\NotFoundException;
 use Countable;
 use IteratorAggregate;
 use Pagerfanta\Pagerfanta;
-use App\Collection\Exception\NonUniqueException;
-use App\Collection\Exception\NotFoundException;
 
 interface CollectionInterface extends IteratorAggregate, Countable
 {

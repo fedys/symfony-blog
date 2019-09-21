@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Validator\Post as PostAssert;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -23,10 +24,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Post
 {
     /**
+     * @var string
+     */
+    const SERIALIZER_GROUP_LIST = 'list';
+
+    /**
+     * @var string
+     */
+    const SERIALIZER_GROUP_DETAIL = 'detail';
+
+    /**
      * @var int|null
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     * @Groups({"list", "detail"})
      */
     private $id;
 
@@ -35,6 +47,7 @@ class Post
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Length(max="150")
+     * @Groups({"list", "detail"})
      */
     private $title;
 
@@ -43,6 +56,7 @@ class Post
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      * @Assert\Length(max="15000")
+     * @Groups({"detail"})
      */
     private $text;
 
@@ -50,12 +64,14 @@ class Post
      * @var DateTime|null
      * @ORM\Column(type="date")
      * @Assert\NotBlank()
+     * @Groups({"list", "detail"})
      */
     private $date;
 
     /**
      * @var array
      * @ORM\Column(type="simple_array", nullable=true)
+     * @Groups({"detail"})
      */
     private $tags;
 
@@ -64,6 +80,7 @@ class Post
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Length(max="255")
+     * @Groups({"list", "detail"})
      */
     private $url;
 
