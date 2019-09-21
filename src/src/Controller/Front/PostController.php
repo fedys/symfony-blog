@@ -2,30 +2,30 @@
 
 namespace App\Controller\Front;
 
-use App\Collection\BlogCollection;
+use App\Collection\PostCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * @Route(name="blog_")
+ * @Route(name="post_")
  */
-class BlogController extends AbstractController
+class PostController extends AbstractController
 {
     /**
-     * @var BlogCollection
+     * @var PostCollection
      */
-    private $blogCollection;
+    private $postCollection;
 
     /**
-     * @param BlogCollection                $blogCollection
+     * @param PostCollection                $postCollection
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(BlogCollection $blogCollection, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(PostCollection $postCollection, AuthorizationCheckerInterface $authorizationChecker)
     {
         $enabled = $authorizationChecker->isGranted('ROLE_ADMIN') ? null : true;
-        $this->blogCollection = $blogCollection->setEnabled($enabled);
+        $this->postCollection = $postCollection->setEnabled($enabled);
     }
 
     /**
@@ -37,14 +37,14 @@ class BlogController extends AbstractController
      */
     public function list(int $page = 1): Response
     {
-        $blogs = $this->blogCollection->setOrder(['date DESC', 'id DESC'])
+        $posts = $this->postCollection->setOrder(['date DESC', 'id DESC'])
             ->getPager()
             ->setNormalizeOutOfRangePages(false)
             ->setMaxPerPage(2)
             ->setCurrentPage($page);
 
-        return $this->render('front/blog/list.html.twig', [
-            'blogs' => $blogs,
+        return $this->render('front/post/list.html.twig', [
+            'posts' => $posts,
         ]);
     }
 }

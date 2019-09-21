@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="blog",
+ * @ORM\Table(name="post",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(columns={"url"})
  *     },
@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  */
-class Blog
+class Post
 {
     /**
      * @var int|null
@@ -71,11 +71,18 @@ class Blog
      */
     private $enabled;
 
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private $views;
+
     public function __construct()
     {
         $this->tags = [];
         $this->date = new DateTime();
         $this->enabled = false;
+        $this->views = 0;
     }
 
     /**
@@ -188,5 +195,35 @@ class Blog
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
+    }
+
+    /**
+     * @return int
+     */
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+
+    /**
+     * @param int $views
+     */
+    public function setViews(int $views): void
+    {
+        $this->views = $views;
+    }
+
+    /**
+     * @return bool
+     */
+    public function incViews(): bool
+    {
+        if ($this->enabled) {
+            ++$this->views;
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -15,6 +15,6 @@ class DefaultController extends AbstractController
      */
     public function dashboard(): Response
     {
-        return $this->redirectToRoute('admin_blog_list', [], Response::HTTP_MOVED_PERMANENTLY);
+        return $this->redirectToRoute('admin_post_list', [], Response::HTTP_MOVED_PERMANENTLY);
     }
 }

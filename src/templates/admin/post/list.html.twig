@@ -1,12 +1,12 @@
 {% extends 'admin/layout/default.html.twig' %}
 
-{% block title %}Admin - Blog{% endblock %}
+{% block title %}Admin - Post{% endblock %}
 
 {% block content %}
     <div class="card">
         <div class="card-header">
-            Blog - list
-            <a href="{{ path('admin_blog_insert') }}" class="float-right">Create a new blog</a>
+            Post - list
+            <a href="{{ path('admin_post_insert') }}" class="float-right">Create a new post</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -18,25 +18,27 @@
                         <th scope="col">Date</th>
                         <th scope="col">Tags</th>
                         <th scope="col">Enabled</th>
+                        <th scope="col" class="text-right">Views</th>
                         <th scope="col" class="text-right">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {# blog \App\Entity\Blog #}
-                    {% for blog in blogs %}
-                        {% set editUrl = path('admin_blog_update', { id: blog.id}) %}
+                    {# post \App\Entity\Post #}
+                    {% for post in posts %}
+                        {% set editUrl = path('admin_post_update', { id: post.id}) %}
                         <tr>
-                            <td>{{ blog.id }}</td>
-                            <td><a href="{{ editUrl }}">{{ blog.title }}</a></td>
-                            <td>{{ blog.date|date }}</td>
-                            <td>{{ blog.tags|join(', ') }}</td>
+                            <td>{{ post.id }}</td>
+                            <td><a href="{{ editUrl }}">{{ post.title }}</a></td>
+                            <td>{{ post.date|date }}</td>
+                            <td>{{ post.tags|join(', ') }}</td>
                             <td>
-                                {% if blog.enabled %}
+                                {% if post.enabled %}
                                     <span class="badge badge-success">Yes</span>
                                 {% else %}
                                     <span class="badge badge-danger">No</span>
                                 {% endif %}
                             </td>
+                            <td class="text-right"><span class="badge badge-pill badge-light">{{ post.views }}</span></td>
                             <td class="text-right">
                                 <a href="#">View</a>
                                 <a href="{{ editUrl }}">Edit</a>
@@ -47,7 +49,7 @@
                 </table>
             </div>
             <div class="mb-n3">
-                {{ pagerfanta(blogs) }}
+                {{ pagerfanta(posts) }}
             </div>
         </div>
     </div>

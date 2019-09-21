@@ -2,9 +2,9 @@
 
 namespace App\Controller\Admin;
 
-use App\Collection\BlogCollection;
-use App\Entity\Blog;
-use App\Form\BlogType;
+use App\Collection\PostCollection;
+use App\Entity\Post;
+use App\Form\PostType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,14 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="blog", name="blog_")
+ * @Route(path="post", name="post_")
  */
-class BlogController extends AbstractController
+class PostController extends AbstractController
 {
     /**
-     * @var BlogCollection
+     * @var PostCollection
      */
-    private $blogCollection;
+    private $postCollection;
 
     /**
      * @var EntityManagerInterface
@@ -27,12 +27,12 @@ class BlogController extends AbstractController
     private $entityManager;
 
     /**
-     * @param BlogCollection         $blogCollection
+     * @param PostCollection         $postCollection
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(BlogCollection $blogCollection, EntityManagerInterface $entityManager)
+    public function __construct(PostCollection $postCollection, EntityManagerInterface $entityManager)
     {
-        $this->blogCollection = $blogCollection->setEnabled(null);
+        $this->postCollection = $postCollection->setEnabled(null);
         $this->entityManager = $entityManager;
     }
 
@@ -45,11 +45,11 @@ class BlogController extends AbstractController
      */
     public function list(int $page = 1): Response
     {
-        $blogs = $this->blogCollection->getPager()
+        $posts = $this->postCollection->getPager()
             ->setCurrentPage($page);
 
-        return $this->render('admin/blog/list.html.twig', [
-            'blogs' => $blogs,
+        return $this->render('admin/post/list.html.twig', [
+            'posts' => $posts,
         ]);
     }
 
@@ -62,7 +62,7 @@ class BlogController extends AbstractController
      */
     public function insert(Request $request): Response
     {
-        return $this->form($request, new Blog());
+        return $this->form($request, new Post());
     }
 
     /**
@@ -75,37 +75,37 @@ class BlogController extends AbstractController
      */
     public function update(Request $request, int $id): Response
     {
-        $blog = $this->blogCollection->find($id);
+        $post = $this->postCollection->find($id);
 
-        if (!$blog) {
+        if (!$post) {
             throw $this->createNotFoundException();
         }
 
-        return $this->form($request, $blog);
+        return $this->form($request, $post);
     }
 
     /**
      * @param Request $request
-     * @param Blog    $blog
+     * @param Post    $post
      *
      * @return Response
      */
-    private function form(Request $request, Blog $blog): Response
+    private function form(Request $request, Post $post): Response
     {
-        $form = $this->createForm(BlogType::class, $blog);
+        $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($blog);
+            $this->entityManager->persist($post);
             $this->entityManager->flush();
-            $this->addFlash('success', sprintf('Blog "%s" has been successfully saved', $blog->getTitle()));
+            $this->addFlash('success', sprintf('The post "%s" has been successfully saved.', $post->getTitle()));
 
-            return $this->redirectToRoute('admin_blog_update', ['id' => $blog->getId()]);
+            return $this->redirectToRoute('admin_post_update', ['id' => $post->getId()]);
         }
 
-        return $this->render('admin/blog/form.html.twig', [
+        return $this->render('admin/post/form.html.twig', [
             'form' => $form->createView(),
-            'blog' => $blog,
+            'post' => $post,
         ]);
     }
 }

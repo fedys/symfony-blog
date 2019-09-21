@@ -2,20 +2,20 @@
 
 namespace App\Collection;
 
-use App\Entity\Blog;
+use App\Entity\Post;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @method Blog|null find(mixed $id)
+ * @method Post|null find(mixed $id)
  */
-class BlogCollection extends AbstractCollection
+class PostCollection extends AbstractCollection
 {
     use CollectionTrait;
 
     /**
      * @var string
      */
-    const ROOT_ALIAS = 'Blog';
+    const ROOT_ALIAS = 'Post';
 
     /**
      * @var bool|null
@@ -33,9 +33,9 @@ class BlogCollection extends AbstractCollection
     /**
      * @param bool|null $enabled
      *
-     * @return BlogCollection
+     * @return PostCollection
      */
-    public function setEnabled(?bool $enabled): BlogCollection
+    public function setEnabled(?bool $enabled): PostCollection
     {
         return $this->setProperty('enabled', $enabled);
     }
@@ -47,7 +47,7 @@ class BlogCollection extends AbstractCollection
     {
         return $this->entityManager->createQueryBuilder()
             ->select(self::ROOT_ALIAS)
-            ->from(Blog::class, self::ROOT_ALIAS);
+            ->from(Post::class, self::ROOT_ALIAS);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Blog;
+use App\Entity\Post;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BlogType extends AbstractType
+class PostType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class BlogType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Blog::class,
+            'data_class' => Post::class,
         ]);
     }
 }

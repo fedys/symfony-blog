@@ -1,11 +1,14 @@
 {% extends 'admin/layout/default.html.twig' %}
 
-{% block title %}Admin - Blog{% endblock %}
+{% block title %}Admin - Post{% endblock %}
 
 {% block content %}
     <div class="card">
         <div class="card-header">
-            Blog - {% if blog.id %}update{% else %}create{% endif %}
+            Post - {% if post.id %}update{% else %}create{% endif %}
+            {% if post.id %}
+                <span class="float-right">Views: <strong>{{ post.views }}</strong></span>
+            {% endif %}
         </div>
         <div class="card-body">
             {{ form_start(form) }}
@@ -22,8 +25,8 @@
                     </div>
                 </div>
                 {{ form_rest(form) }}
-                <button type="submit" class="btn btn-primary">Save the blog</button>
-                <a href="{{ path('admin_blog_list')}}" class="btn btn-light">Back to the listing</a>
+                <button type="submit" class="btn btn-primary">Save the post</button>
+                <a href="{{ path('admin_post_list')}}" class="btn btn-light">Back to the listing</a>
             {{ form_end(form) }}
         </div>
     </div>

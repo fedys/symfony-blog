@@ -1,0 +1,25 @@
+{% extends 'front/layout/default.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+    <h1>Blog</h1>
+    {# post \App\Entity\Post #}
+    {% for post in posts %}
+        {% set detailUrl = '#' %}
+        <h2><a href="{{ detailUrl }}">{{ post.title }}</a></h2>
+        <p class="text-muted">{{ post.date|date }}</p>
+    {% endfor %}
+    <div class="row mt-5">
+        <div class="col">
+            {% if posts.hasPreviousPage %}
+                <a href="{{ path('front_post_list', { page: posts.previousPage}) }}">&#171; Newer posts</a>
+            {% endif %}
+        </div>
+        <div class="col text-right">
+            {% if posts.hasNextPage %}
+                <a href="{{ path('front_post_list', { page: posts.nextPage}) }}">Older posts &#187;</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
