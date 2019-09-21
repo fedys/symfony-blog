@@ -40,7 +40,7 @@
                             </td>
                             <td class="text-right"><span class="badge badge-pill badge-light">{{ post.views }}</span></td>
                             <td class="text-right">
-                                <a href="#">View</a>
+                                <a href="{{ path(constant('App\\Routing\\UrlGenerator\\PostUrlGenerator::ROUTE_DETAIL'), {post: post}) }}">View</a>
                                 <a href="{{ editUrl }}">Edit</a>
                             </td>
                         </tr>

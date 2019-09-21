@@ -25,3 +25,17 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    Symfony\Cmf\Component\Routing\ChainRouter:
+        calls:
+            - [setContext, ['@router.request_context']]
+
+    app.router.post:
+        class: Symfony\Cmf\Component\Routing\DynamicRouter
+        arguments:
+            $matcher: '@App\Routing\Matcher\PostMatcher'
+            $generator: '@App\Routing\UrlGenerator\PostUrlGenerator'
+
+    App\Validator\Post\UrlValidator:
+        arguments:
+            $router: '@router.default'

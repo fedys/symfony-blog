@@ -3,6 +3,8 @@
 namespace App\Controller\Front;
 
 use App\Collection\PostCollection;
+use App\Entity\Post;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +21,18 @@ class PostController extends AbstractController
     private $postCollection;
 
     /**
+     * @var bool
+     */
+    private $isAdmin;
+
+    /**
      * @param PostCollection                $postCollection
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(PostCollection $postCollection, AuthorizationCheckerInterface $authorizationChecker)
     {
-        $enabled = $authorizationChecker->isGranted('ROLE_ADMIN') ? null : true;
-        $this->postCollection = $postCollection->setEnabled($enabled);
+        $this->isAdmin = $authorizationChecker->isGranted('ROLE_ADMIN');
+        $this->postCollection = $postCollection->setEnabled($this->isAdmin ? null : true);
     }
 
     /**
@@ -45,6 +52,29 @@ class PostController extends AbstractController
 
         return $this->render('front/post/list.html.twig', [
             'posts' => $posts,
+        ]);
+    }
+
+    /**
+     * @param Post                   $post
+     * @param EntityManagerInterface $entityManager
+     *
+     * @return Response
+     */
+    public function detail(Post $post, EntityManagerInterface $entityManager): Response
+    {
+        if (!$this->isAdmin) {
+            if (!$post->isEnabled()) {
+                throw $this->createNotFoundException();
+            }
+
+            if ($post->incViews()) {
+                $entityManager->flush();
+            }
+        }
+
+        return $this->render('front/post/detail.html.twig', [
+            'post' => $post,
         ]);
     }
 }

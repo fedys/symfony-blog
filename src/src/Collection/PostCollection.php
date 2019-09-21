@@ -23,6 +23,11 @@ class PostCollection extends AbstractCollection
     private $enabled = true;
 
     /**
+     * @var string|null
+     */
+    private $url;
+
+    /**
      * {@inheritdoc}
      */
     protected function init(): void
@@ -38,6 +43,16 @@ class PostCollection extends AbstractCollection
     public function setEnabled(?bool $enabled): PostCollection
     {
         return $this->setProperty('enabled', $enabled);
+    }
+
+    /**
+     * @param string|null $url
+     *
+     * @return PostCollection
+     */
+    public function setUrl(?string $url): PostCollection
+    {
+        return $this->setProperty('url', $url);
     }
 
     /**
@@ -57,6 +72,10 @@ class PostCollection extends AbstractCollection
     {
         if (isset($this->enabled)) {
             $this->andWhere($queryBuilder, 'enabled', (int) (bool) $this->enabled);
+        }
+
+        if (isset($this->url)) {
+            $this->andWhere($queryBuilder, 'url', $this->url);
         }
     }
 }

@@ -4,12 +4,16 @@
 
 {% block content %}
     <h1>Blog</h1>
-    {# post \App\Entity\Post #}
-    {% for post in posts %}
-        {% set detailUrl = '#' %}
-        <h2><a href="{{ detailUrl }}">{{ post.title }}</a></h2>
-        <p class="text-muted">{{ post.date|date }}</p>
-    {% endfor %}
+    <div class="row mt-5">
+        {# post \App\Entity\Post #}
+        {% for post in posts %}
+            {% set detailUrl = path(constant('App\\Routing\\UrlGenerator\\PostUrlGenerator::ROUTE_DETAIL'), {post: post}) %}
+            <div class="col-md-6">
+                <h2><a href="{{ detailUrl }}">{{ post.title }}</a></h2>
+                <p class="text-muted">{{ post.date|date }}</p>
+            </div>
+        {% endfor %}
+    </div>
     <div class="row mt-5">
         <div class="col">
             {% if posts.hasPreviousPage %}

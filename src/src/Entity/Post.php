@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Validator\Post as PostAssert;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         @ORM\Index(columns={"enabled"})
  *     }
  * )
+ * @PostAssert\Url
  */
 class Post
 {
