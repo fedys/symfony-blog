@@ -25,6 +25,9 @@ class BlogType extends AbstractType
             ])
             ->add('url', TextType::class)
             ->add('text', CKEditorType::class)
+            ->add('tags', TagsType::class, [
+                'required' => false,
+            ])
             ->add('enabled', CheckboxType::class, [
                 'required' => false,
             ])

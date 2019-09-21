@@ -74,6 +74,7 @@ class Blog
     public function __construct()
     {
         $this->tags = [];
+        $this->date = new DateTime();
         $this->enabled = false;
     }
 
