@@ -2,7 +2,7 @@
 
 <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/7.5/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="config/bootstrap.php"
@@ -16,8 +16,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Functional">
+            <directory>tests/Functional</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
         </testsuite>
     </testsuites>
 
@@ -26,6 +29,10 @@
             <directory>src</directory>
         </whitelist>
     </filter>
+
+    <extensions>
+        <extension class="App\Tests\Functional\Extension\CreateDbHook"/>
+    </extensions>
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
