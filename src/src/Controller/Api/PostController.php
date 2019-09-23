@@ -9,9 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 /**
  * @Route(path="post", name="post_")
+ * @SWG\Tag(name="Post")
  */
 class PostController extends AbstractController
 {
@@ -30,6 +33,19 @@ class PostController extends AbstractController
 
     /**
      * @Route(path="", methods={"GET"}, name="list")
+     * @SWG\Get(
+     *     summary="Get a list of posts",
+     *     description="Returns a list of posts",
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Returns a list of posts.",
+     *         @SWG\Schema(
+     *             type="array",
+     *             @SWG\Items(ref=@Model(type=App\Entity\Post::class, groups={"list"}))
+     *         )
+     *     )
+     * )
      *
      * @return Response
      */
@@ -40,6 +56,26 @@ class PostController extends AbstractController
 
     /**
      * @Route(path="/{id<\d+>}", methods={"GET"}, name="detail")
+     * @SWG\Get(
+     *     summary="Get a post detail",
+     *     description="Returns a post detail.",
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="id",
+     *         type="string",
+     *         description="ID of the given post. Example: `54`"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Returns a post detail.",
+     *         @Model(type=App\Entity\Post::class, groups={"detail"})
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Returned if the post does not exist."
+     *     )
+     * )
      *
      * @param int                    $id
      * @param EntityManagerInterface $entityManager

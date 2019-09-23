@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Entity
@@ -39,6 +40,7 @@ class Post
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      * @Groups({"list", "detail"})
+     * @SWG\Property(example=256)
      */
     private $id;
 
@@ -48,6 +50,7 @@ class Post
      * @Assert\NotBlank()
      * @Assert\Length(max="150")
      * @Groups({"list", "detail"})
+     * @SWG\Property(example="Post title")
      */
     private $title;
 
@@ -57,6 +60,7 @@ class Post
      * @Assert\NotBlank()
      * @Assert\Length(max="15000")
      * @Groups({"detail"})
+     * @SWG\Property(example="<p>Post text</p>")
      */
     private $text;
 
@@ -72,6 +76,7 @@ class Post
      * @var array
      * @ORM\Column(type="simple_array", nullable=true)
      * @Groups({"detail"})
+     * @SWG\Property(example={"first", "second"})
      */
     private $tags;
 
@@ -81,6 +86,7 @@ class Post
      * @Assert\NotBlank()
      * @Assert\Length(max="255")
      * @Groups({"list", "detail"})
+     * @SWG\Property(example="/post-url")
      */
     private $url;
 
