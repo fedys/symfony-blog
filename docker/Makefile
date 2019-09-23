@@ -16,7 +16,7 @@ yarn-dev:
 
 ckeditor-install:
 	$(call print_info,Running ckeditor:install)
-	docker-compose run --rm php bash -c 'bin/console ckeditor:install --clear=skip'
+	docker-compose run --rm php bash -c 'bin/console ckeditor:install --clear=skip && bin/console assets:install'
 
 db-create:
 	$(call print_info,Creating DB)
