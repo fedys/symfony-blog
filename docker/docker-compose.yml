@@ -4,6 +4,8 @@ services:
     build: db
     volumes:
       - db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       TZ: 'Europe/Prague'
@@ -12,6 +14,8 @@ services:
     build: php
     volumes:
       - ../src:/var/www/html
+    ports:
+      - "80:80"
 
 volumes:
   db-data:

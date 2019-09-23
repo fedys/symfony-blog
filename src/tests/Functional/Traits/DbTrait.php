@@ -18,10 +18,24 @@ trait DbTrait
 
     /**
      * @param array $entities
+     */
+    private function persistAndFlush(array $entities): void
+    {
+        $entityManager = $this->getEntityManager();
+
+        foreach ($entities as $entity) {
+            $entityManager->persist($entity);
+        }
+
+        $entityManager->flush();
+    }
+
+    /**
+     * @param array $entities
      *
      * @throws DBALException
      */
-    private function truncateEntities(array $entities): void
+    private function truncate(array $entities): void
     {
         /** @var EntityManagerInterface $entityManager */
         /** @noinspection PhpUndefinedFieldInspection */

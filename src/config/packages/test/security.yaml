@@ -1,0 +1,6 @@
+security:
+    providers:
+        admin:
+            memory:
+                users:
+                    '%env(TEST_ADMIN_USERNAME)%': { password: '%env(TEST_ADMIN_PASSWORD_ENCODED)%', roles: ['ROLE_ADMIN'] }

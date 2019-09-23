@@ -11,9 +11,6 @@ trait ClientTrait
      */
     private $client;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();

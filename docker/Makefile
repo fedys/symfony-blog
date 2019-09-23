@@ -36,7 +36,11 @@ docker-build:
 
 docker-compose-up:
 	$(call print_info,Starting up docker containers)
-	docker-compose up -d
+	docker-compose up -d && sleep 3
+
+tests: docker-compose-up
+	$(call print_info,Running tests)
+	docker-compose run --rm php bin/phpunit --testdox
 
 init: docker-build composer-install yarn-install yarn-dev ckeditor-install docker-compose-up db-create db-migrate db-fixtures
 	$(call print_info,The application has been installed successfully and runs on http://localhost/)
